@@ -1,0 +1,21 @@
+cp /vagrant/salt /opt/ -r
+cp /vagrant/master.d/* /etc/salt/master.d/
+systemctl restart salt-master
+salt-key -A -y
+salt -L minion1,minion2 grains.setval role webserver
+salt -L minion3 grains.setval role proxy
+salt '*' mine.update
+salt '*' config.get mine_functions
+salt \* state.highstate
+salt minion3 network.interface_ip eth0
+salt salt pkg.install salt-ssh
+salt salt pkg.install salt-cloud
+cp -r /vagrant/ssh/ /etc/salt/pki/master/
+cp -r /vagrant/cloud.providers.d/do.conf /etc/salt/cloud.providers.d
+cp -r /vagrant/cloud.profiles.d/do.conf /etc/salt/cloud.profiles.d
+cp -r /vagrant/cloud.maps.d/testmap /etc/salt/cloud.maps.d
+salt-cloud --no-deploy -p test512 test
+salt-cloud -m testmap -P --no-deploy 
+salt-ssh -i \* test.ping 
+salt-ssh \* mine.get 'role:webserver' network.ip_addrs expr_form=grain
+

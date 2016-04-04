@@ -1,0 +1,11 @@
+{% set fqdn = salt['grains.get']('fqdn') %}
+{% set ip = salt['grains.get']('ip4_interfaces:eth0') %}
+
+<html>
+  <head>
+    <title>{{ fqdn }}</title>
+  </head>
+  <body>
+    {'{{ fqdn }}': '{{ ip[0] }}'}
+  </body>
+</html>

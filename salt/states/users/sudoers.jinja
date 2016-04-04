@@ -1,0 +1,3 @@
+{% set user = salt['pillar.get']('users') %}
+
+{{ user }} ALL=(ALL) NOPASSWD: ALL

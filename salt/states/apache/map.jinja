@@ -1,0 +1,20 @@
+{% set apache = salt['grains.filter_by']({
+    'Ubuntu': {
+        'pkg': 'apache2',
+        'service': 'apache2',
+        'conf': '/etc/apache2/apache2.conf',
+        'filename': 'salt://apache/files/ubuntu/apache2.conf.jinja',
+        'default_vhost': '/etc/apache2/sites-available/000-default.conf',
+        'default_vhost_file': 'salt://apache/files/ubuntu/000-default.conf.jinja',
+    },
+    'CentOS': {
+        'pkg': 'httpd',
+        'service': 'httpd',
+        'conf': '/etc/httpd/conf/httpd.conf',
+        'filename': 'salt://apache/files/centos/httpd.conf.jinja',
+    },
+  }, grain='os', merge=salt['pillar.get']('apache'))
+%}
+  
+
+
