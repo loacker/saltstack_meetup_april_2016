@@ -302,6 +302,7 @@ Pillar data is useful for:
 
 ```bash
 salt '*' pillar.items
+salt '*' pillar.get mine_functions
 ```
 ```bash
 apache:
@@ -324,6 +325,12 @@ Mine data is gathered on the Minion and sent back to the Master where only the m
 Mine data is designed to be much more up-to-date than grain data.
 Mines are designed to replace slow peer publishing calls when Minions need data from other Minions.
 
+Mine are updated on minion startup and refreshed on a fixed interval managed by the scheduler
+
+```bash
+salt \* mine.update
+salt \* mine.get 'role:webserver' network.ip_addrs expr_form=grain
+```
 
 ---
 # Formulas
@@ -421,6 +428,7 @@ class: center, middle
  - Salt event bus
  - Reactor
  - Beacon
+ - Scheduler
  - Returners
  - Extenal job cache
  - salt-proxy
